@@ -24,6 +24,14 @@ const validateBookingCycle = (startDate, endDate, packageType) => {
     };
   }
 
+  // Prevent full_month packages from starting on 16th
+  if (packageType === 'full_month' && startDay === 16) {
+    return {
+      valid: false,
+      error: 'Full month campaigns can only start on 1st of month (1-30 days)'
+    };
+  }
+
   // Validate package type logic (only if endDate is provided)
   if (end) {
     if (packageType === 'half_month') {
@@ -37,12 +45,12 @@ const validateBookingCycle = (startDate, endDate, packageType) => {
           };
         }
       } else if (startDay === 16) {
-        // Should end on last day of same month
-        const expectedEnd = start.clone().endOf('month');
+        // Should end on 30th of same month (treating all months as 30 days)
+        const expectedEnd = start.clone().date(30);
         if (!end.isSame(expectedEnd, 'day')) {
           return {
             valid: false,
-            error: 'Half month campaigns starting on 16th must end on last day of the same month'
+            error: 'Half month campaigns starting on 16th must end on 30th of the same month'
           };
         }
       }
@@ -53,11 +61,12 @@ const validateBookingCycle = (startDate, endDate, packageType) => {
           error: 'Full month campaigns must start on 1st of month'
         };
       }
-      const expectedEnd = start.clone().endOf('month');
+      // Should end on 30th of same month (treating all months as 30 days)
+      const expectedEnd = start.clone().date(30);
       if (!end.isSame(expectedEnd, 'day')) {
         return {
           valid: false,
-          error: 'Full month campaigns must end on last day of the same month'
+          error: 'Full month campaigns must end on 30th of the same month'
         };
       }
     }
@@ -92,10 +101,10 @@ const checkOverbooking = async (truckId, startDate, endDate, packageType, exclud
         cycleNumber: 1
       });
     } else if (startDay === 16) {
-      // Cycle 2: 16th to end of month
+      // Cycle 2: 16th to 30th (treating all months as 30 days)
       affectedCycles.push({
         start: start.clone(),
-        end: start.clone().endOf('month'),
+        end: start.clone().date(30),
         cycleNumber: 2
       });
     }
@@ -109,7 +118,7 @@ const checkOverbooking = async (truckId, startDate, endDate, packageType, exclud
       },
       {
         start: start.clone().date(16),
-        end: start.clone().endOf('month'),
+        end: start.clone().date(30),
         cycleNumber: 2
       }
     );
@@ -208,16 +217,16 @@ const getAvailableCycles = async (truckId, monthsAhead = 6) => {
 
     const cycle2 = {
       start: checkDate.clone().date(16),
-      end: checkDate.clone().endOf('month'),
+      end: checkDate.clone().date(30),
       cycleNumber: 2,
-      label: `Half Month (${checkDate.format('MMM')} 16-${checkDate.format('D')}, ${checkDate.format('YYYY')})`
+      label: `Half Month (${checkDate.format('MMM')} 16-30, ${checkDate.format('YYYY')})`
     };
 
     const fullMonth = {
       start: checkDate.clone().date(1),
-      end: checkDate.clone().endOf('month'),
+      end: checkDate.clone().date(30),
       cycleNumber: 'both',
-      label: `Full Month (${checkDate.format('MMM')} 1-${checkDate.format('D')}, ${checkDate.format('YYYY')})`
+      label: `Full Month (${checkDate.format('MMM')} 1-30, ${checkDate.format('YYYY')})`
     };
 
     // Check availability for each cycle
@@ -278,15 +287,15 @@ const calculateEndDate = (startDate, packageType) => {
       expectedEnd.setDate(15);
       return expectedEnd;
     } else if (startDay === 16) {
-      // Return last day of same month - use setMonth with day 0
+      // Return 30th of same month (treating all months as 30 days)
       const expectedEnd = new Date(start);
-      expectedEnd.setMonth(start.getMonth() + 1, 0);
+      expectedEnd.setDate(30);
       return expectedEnd;
     }
   } else if (packageType === 'full_month') {
-    // Return last day of same month
+    // Return 30th of same month (treating all months as 30 days)
     const expectedEnd = new Date(start);
-    expectedEnd.setMonth(start.getMonth() + 1, 0);
+    expectedEnd.setDate(30);
     return expectedEnd;
   }
   

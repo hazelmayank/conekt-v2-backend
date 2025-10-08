@@ -87,6 +87,11 @@ campaignSchema.pre('save', function(next) {
     return next(new Error('Campaigns can only start on 1st or 16th of each month'));
   }
 
+  // Prevent full_month packages from starting on 16th
+  if (this.package_type === 'full_month' && startDay === 16) {
+    return next(new Error('Full month campaigns can only start on 1st of month (1-30 days)'));
+  }
+
   // Validate package_type logic
   if (this.package_type === 'half_month') {
     if (startDay === 1) {
@@ -97,21 +102,22 @@ campaignSchema.pre('save', function(next) {
         return next(new Error('Half month campaigns starting on 1st must end on 15th'));
       }
     } else if (startDay === 16) {
-      // Should end on last day of month
+      // Should end on 30th of same month (treating all months as 30 days)
       const expectedEnd = new Date(this.start_date);
-      expectedEnd.setMonth(this.start_date.getMonth() + 1, 0);
+      expectedEnd.setDate(30);
       if (this.end_date.getTime() !== expectedEnd.getTime()) {
-        return next(new Error('Half month campaigns starting on 16th must end on last day of month'));
+        return next(new Error('Half month campaigns starting on 16th must end on 30th of the same month'));
       }
     }
   } else if (this.package_type === 'full_month') {
     if (startDay !== 1) {
       return next(new Error('Full month campaigns must start on 1st of month'));
     }
+    // Should end on 30th of same month (treating all months as 30 days)
     const expectedEnd = new Date(this.start_date);
-    expectedEnd.setMonth(this.start_date.getMonth() + 1, 0);
+    expectedEnd.setDate(30);
     if (this.end_date.getTime() !== expectedEnd.getTime()) {
-      return next(new Error('Full month campaigns must end on last day of month'));
+      return next(new Error('Full month campaigns must end on 30th of the same month'));
     }
   }
 
