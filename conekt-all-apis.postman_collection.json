@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "3e07a17a-4aae-4fc8-81df-5015f4954f5f",
+		"name": "conekt-all-apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45701785"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "create-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Suhas\",\r\n    \"phone\":\"+916364695019\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/admin/auth/create-admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"auth",
+								"create-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VerifyOtp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\": \"+916364695019\",\r\n    \"otp\":\"127932\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/admin/auth/create-admin/verify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"auth",
+								"create-admin",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cities",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "trucks",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "truck-details",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "truck-palylist",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "upload-video",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU1MWNiZTVlYjZlZTgwYjE0ZTlkM2EiLCJpYXQiOjE3NTk4NDU2MDksImV4cCI6MTc2MDQ1MDQwOX0.ko9K60mwMiquUh1vJt1SSmBALYykcqIS8bC2wSxaHEM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/C:/Users/MAYANK/Downloads/vid-7.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/admin/video-assets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"video-assets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-videos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU1MWNiZTVlYjZlZTgwYjE0ZTlkM2EiLCJpYXQiOjE3NTk4NDU2MDksImV4cCI6MTc2MDQ1MDQwOX0.ko9K60mwMiquUh1vJt1SSmBALYykcqIS8bC2wSxaHEM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/admin/videos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"videos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "campaign-create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU1MWNiZTVlYjZlZTgwYjE0ZTlkM2EiLCJpYXQiOjE3NTk4NDU2MDksImV4cCI6MTc2MDQ1MDQwOX0.ko9K60mwMiquUh1vJt1SSmBALYykcqIS8bC2wSxaHEM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " { \r\n        \"campaign_name\":\"Super Saver\",\r\n        \"company_name\":\"Swiggy\",\r\n        \"truck_id\":\"68e4c941ef2835e7b8c2c9ba\",\r\n        \"video_id\":\"68e4e13067bef8f6a7845776\", \r\n        \"package_type\":\"half_month\", \r\n        \"start_date\":\"2025-11-16\",\r\n        \"play_order\":\"1\"\r\n      } ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/admin/campaigns",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"campaigns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "push-playlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU0ZDQ0MmViNTc5MTE4MjI4ZGY3ZTciLCJpYXQiOjE3NTk4MjcwNTcsImV4cCI6MTc2MDQzMTg1N30.OBzSxA2WrrylutEEUJ665usb_RopeBEESf1f9cMnWVM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\":\"2025-10-17\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/admin//trucks/68e4c941ef2835e7b8c2c9ba/push",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"admin",
+								"",
+								"trucks",
+								"68e4c941ef2835e7b8c2c9ba",
+								"push"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "hardware",
+			"item": [
+				{
+					"name": "status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-device-id",
+								"value": "TRUCK_KA01_001",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"device_id\": \"TRUCK_KA01_001\",\r\n  \"status\": \"online\",\r\n  \"uptime\": 86400,\r\n  \"gps_lat\": 19.0760,\r\n  \"gps_lng\": 72.8777,\r\n  \"storage_mb\": 1024,\r\n  \"battery_percent\": 85,\r\n  \"telemetry\": {\r\n    \"cpu_usage\": 45,\r\n    \"memory_usage\": 60,\r\n    \"disk_free\": 2048,\r\n    \"network_rssi\": -65,\r\n    \"temperature\": 42\r\n  },\r\n  \"player_status\": {\r\n    \"status\": \"playing\",\r\n    \"current_item\": \"campaign_123\",\r\n    \"position_sec\": 30,\r\n    \"playlist_version\": \"1759832991799-1\"\r\n  },\r\n  \"errors\": [\r\n    {\r\n      \"level\": \"warning\",\r\n      \"message\": \"Low battery warning\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/hardware/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"hardware",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "playlist",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-device-id",
+								"value": "TRUCK_KA01_001",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/api/v1/hardware/playlist",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"hardware",
+								"playlist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
