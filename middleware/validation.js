@@ -4,6 +4,8 @@ const { body, validationResult } = require('express-validator');
 const validateRequest = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log('Validation errors:', errors.array());
+    console.log('Request body:', req.body);
     return res.status(400).json({
       success: false,
       message: 'Validation failed',
@@ -66,10 +68,40 @@ const truckValidation = [
     .isLength({ min: 1, max: 50 })
     .withMessage('Truck number is required'),
   
-  body('route_name')
+  body('route.route_name')
     .trim()
     .isLength({ min: 1, max: 100 })
     .withMessage('Route name is required'),
+  
+  body('route.polyline')
+    .optional()
+    .isArray()
+    .withMessage('Polyline must be an array'),
+  
+  body('route.polyline.*.lat')
+    .optional()
+    .isFloat({ min: -90, max: 90 })
+    .withMessage('Polyline latitude must be between -90 and 90'),
+  
+  body('route.polyline.*.lng')
+    .optional()
+    .isFloat({ min: -180, max: 180 })
+    .withMessage('Polyline longitude must be between -180 and 180'),
+  
+  body('route.polygon')
+    .optional()
+    .isArray()
+    .withMessage('Polygon must be an array'),
+  
+  body('route.polygon.*.lat')
+    .optional()
+    .isFloat({ min: -90, max: 90 })
+    .withMessage('Polygon latitude must be between -90 and 90'),
+  
+  body('route.polygon.*.lng')
+    .optional()
+    .isFloat({ min: -180, max: 180 })
+    .withMessage('Polygon longitude must be between -180 and 180'),
   
   body('city_id')
     .isMongoId()

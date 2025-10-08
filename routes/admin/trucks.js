@@ -37,7 +37,7 @@ router.post('/trucks',
       const {
         city_id,
         truck_number,
-        route_name,
+        route,
         gps_lat,
         gps_lng
       } = req.body;
@@ -76,7 +76,11 @@ router.post('/trucks',
       const truck = new Truck({
         city_id,
         truck_number,
-        route_name,
+        route: {
+          route_name: route.route_name,
+          polyline: route.polyline || [],
+          polygon: route.polygon || []
+        },
         controller_id,
         status: 'offline',
         gps_lat: gps_lat || null,
@@ -130,7 +134,7 @@ router.get('/cities/:cityId/trucks', authenticateToken, async (req, res) => {
     
     const trucks = await Truck.find({ city_id: cityId })
       .populate('city_id', 'name')
-      .select('truck_number route_name controller_id status last_heartbeat_at gps_lat gps_lng storage_mb battery_percent')
+      .select('truck_number route controller_id status last_heartbeat_at gps_lat gps_lng storage_mb battery_percent')
       .sort({ truck_number: 1 });
 
     // Add online/offline status

@@ -12,10 +12,20 @@ const truckSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
-  route_name: {
-    type: String,
-    required: true,
-    trim: true
+  route: {
+    route_name: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    polyline: [{
+      lat: Number,
+      lng: Number
+    }],
+    polygon: [{
+      lat: Number,
+      lng: Number
+    }]
   },
   controller_id: {
     type: String,

@@ -26,12 +26,12 @@ connectDB();
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
+// CORS configuration - Allow all origins for now
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.com'] 
-    : ['http://localhost:3000', 'http://localhost:3001'],
-  credentials: true
+  origin: true, // Allow all origins
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Device-ID']
 }));
 
 // Rate limiting
@@ -96,6 +96,15 @@ app.get('/', (req, res) => {
       health: '/health'
     }
   });
+});
+
+// CORS test endpoint
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Device-ID');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
 });
 
 // 404 handler

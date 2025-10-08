@@ -132,6 +132,8 @@ router.post('/create-admin', phoneValidation, validateRequest, async (req, res) 
   try {
     const { phone, name } = req.body;
 
+    console.log('Creating admin account:', { name, phone });
+
     // Check if user already exists
     const existingUser = await User.findOne({ phone });
     if (existingUser) {

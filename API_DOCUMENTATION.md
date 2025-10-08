@@ -2,7 +2,12 @@
 
 ## Base URL
 - Development: `http://localhost:3001`
-- Production: `https://your-domain.com`
+- Production: `https://conekt-v2-backend.onrender.com`
+
+## Live Backend Status
+✅ **Deployed Backend**: [https://conekt-v2-backend.onrender.com](https://conekt-v2-backend.onrender.com)
+
+**Health Check**: `GET https://conekt-v2-backend.onrender.com/health`
 
 ## Environment Variables
 
@@ -60,7 +65,7 @@ X-Device-ID: <controller_id>
 
 #### Send Login OTP
 ```http
-POST /admin/auth/login
+POST https://conekt-v2-backend.onrender.com/admin/auth/login
 Content-Type: application/json
 
 {
@@ -184,14 +189,27 @@ Authorization: Bearer <token>
 
 #### Create Truck
 ```http
-POST /admin/trucks
+POST https://conekt-v2-backend.onrender.com/admin/trucks
 Authorization: Bearer <token>
 Content-Type: application/json
 
 {
   "city_id": "64a1b2c3d4e5f6789012345",
   "truck_number": "KA01-AB-1234",
-  "route_name": "Route A",
+  "route": {
+    "route_name": "Route A",
+    "polyline": [
+      { "lat": 19.0760, "lng": 72.8777 },
+      { "lat": 19.0761, "lng": 72.8778 },
+      { "lat": 19.0762, "lng": 72.8779 }
+    ],
+    "polygon": [
+      { "lat": 19.0750, "lng": 72.8760 },
+      { "lat": 19.0770, "lng": 72.8760 },
+      { "lat": 19.0770, "lng": 72.8790 },
+      { "lat": 19.0750, "lng": 72.8790 }
+    ]
+  },
   "gps_lat": 19.0760,
   "gps_lng": 72.8777
 }
@@ -211,7 +229,20 @@ Content-Type: application/json
       "timezone": "Asia/Kolkata"
     },
     "truck_number": "KA01-AB-1234",
-    "route_name": "Route A",
+    "route": {
+      "route_name": "Route A",
+      "polyline": [
+        { "lat": 19.0760, "lng": 72.8777 },
+        { "lat": 19.0761, "lng": 72.8778 },
+        { "lat": 19.0762, "lng": 72.8779 }
+      ],
+      "polygon": [
+        { "lat": 19.0750, "lng": 72.8760 },
+        { "lat": 19.0770, "lng": 72.8760 },
+        { "lat": 19.0770, "lng": 72.8790 },
+        { "lat": 19.0750, "lng": 72.8790 }
+      ]
+    },
     "controller_id": "TRUCK_KA01_AB_1234",
     "status": "offline",
     "gps_lat": 19.0760,
@@ -240,7 +271,19 @@ Authorization: Bearer <token>
     {
       "_id": "truck_id",
       "truck_number": "KA01-AB-1234",
-      "route_name": "Route A",
+      "route": {
+        "route_name": "Route A",
+        "polyline": [
+          { "lat": 19.0760, "lng": 72.8777 },
+          { "lat": 19.0761, "lng": 72.8778 }
+        ],
+        "polygon": [
+          { "lat": 19.0750, "lng": 72.8760 },
+          { "lat": 19.0770, "lng": 72.8760 },
+          { "lat": 19.0770, "lng": 72.8790 },
+          { "lat": 19.0750, "lng": 72.8790 }
+        ]
+      },
       "controller_id": "TRUCK_KA01_AB_1234",
       "status": "offline",
       "isOnline": false,
@@ -271,7 +314,19 @@ Authorization: Bearer <token>
       "name": "Mumbai"
     },
     "truck_number": "KA01-AB-1234",
-    "route_name": "Route A",
+    "route": {
+      "route_name": "Route A",
+      "polyline": [
+        { "lat": 19.0760, "lng": 72.8777 },
+        { "lat": 19.0761, "lng": 72.8778 }
+      ],
+      "polygon": [
+        { "lat": 19.0750, "lng": 72.8760 },
+        { "lat": 19.0770, "lng": 72.8760 },
+        { "lat": 19.0770, "lng": 72.8790 },
+        { "lat": 19.0750, "lng": 72.8790 }
+      ]
+    },
     "controller_id": "TRUCK_KA01_AB_1234",
     "status": "offline",
     "last_heartbeat_at": "2025-01-07T...",
@@ -414,7 +469,7 @@ Content-Type: application/json
 
 #### Create Campaign
 ```http
-POST /admin/campaigns
+POST https://conekt-v2-backend.onrender.com/admin/campaigns
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -485,7 +540,7 @@ Authorization: Bearer <token>
 
 #### Direct Video Upload
 ```http
-POST /admin/video-assets
+POST https://conekt-v2-backend.onrender.com/admin/video-assets
 Authorization: Bearer <token>
 Content-Type: multipart/form-data
 
@@ -691,7 +746,7 @@ Authorization: Bearer <token>
 
 ### Send Status Update
 ```http
-POST /api/v1/hardware/status
+POST https://conekt-v2-backend.onrender.com/api/v1/hardware/status
 X-Device-ID: TRUCK_KA01_AB_1234
 Content-Type: application/json
 
@@ -922,6 +977,33 @@ All endpoints return consistent error format:
 - Trucks → Campaigns (1:many)
 - Videos → Campaigns (1:many)
 - Trucks → Playlists (1:many per date)
+
+---
+
+## Deployment
+
+### Production Environment
+- **URL**: [https://conekt-v2-backend.onrender.com](https://conekt-v2-backend.onrender.com)
+- **Platform**: Render.com
+- **Status**: ✅ Live and operational
+- **Health Check**: `GET https://conekt-v2-backend.onrender.com/health`
+
+### API Endpoints
+- **Admin APIs**: `https://conekt-v2-backend.onrender.com/admin/*`
+- **Hardware APIs**: `https://conekt-v2-backend.onrender.com/api/v1/hardware/*`
+- **Health Check**: `https://conekt-v2-backend.onrender.com/health`
+
+### Testing the Live API
+You can test the deployed backend using the following curl commands:
+
+```bash
+# Health check
+curl https://conekt-v2-backend.onrender.com/health
+
+# Get cities (requires authentication)
+curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+     https://conekt-v2-backend.onrender.com/admin/cities
+```
 
 ---
 
