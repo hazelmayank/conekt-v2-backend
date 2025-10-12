@@ -7,13 +7,7 @@ const validateBookingCycle = (startDate, endDate, packageType) => {
   const end = endDate ? moment(endDate) : null;
   const today = moment().startOf('day');
 
-  // Check if start date is in the past
-  if (start.isBefore(today)) {
-    return {
-      valid: false,
-      error: 'Cannot book past dates'
-    };
-  }
+
 
   // Check if start date is 1st or 16th
   const startDay = start.date();
