@@ -5,7 +5,7 @@ const { sendOTP: twilioSendOTP, verifyOTP: twilioVerifyOTP } = require('../servi
 // Generate JWT token
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: '7d' // 7 days as per documentation
+    expiresIn: '30d' // 7 days as per documentation
   });
 };
 
